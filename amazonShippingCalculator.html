@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amazon shipping Calculator</title>
+</head>
+<body>
+    <h1>Amazon Shipping Calculator</h1>
+    <p>For order under $40 - shipping charge $10 </p>
+    <p>For order over $40 - free shipping</p>
+    <input type="text" placeholder="Enter the price" onkeydown=" PressEnter()"> 
+    <button onclick="calculate()">Calculate</button>
+    <p class="charge">$</p>
+
+
+
+    <button>9</button>
+    <button class="btn" onclick="change()">9b</button>
+
+
+    <script>
+        const input = document.querySelector('input');
+        const button = document.querySelector('button');
+        const priceDisplay = document.querySelector('.charge');
+
+        function calculate(){
+            if(input.value < 40){
+                priceDisplay.textContent = `Shipping charge : ${Number(input.value) + 10}`;
+            } else{
+                priceDisplay.textContent = 'No shipping charges';
+            }
+        }
+
+        function PressEnter(){
+            if(event.key === 'Enter'){
+                calculate();
+            }
+        }
+const btn = document.querySelector('.btn')
+        console.log(document.querySelector('button'))
+        function change(){
+            btn.style.backgroundColor = 'blue';
+            btn.style.color = 'white';
+            btn.textContent = 'Clicked!';
+        }
+    </script>
+</body>
+</html>

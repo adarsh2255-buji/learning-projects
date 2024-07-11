@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Function RPS</title>
+</head>
+<body>
+    <h1>Rock paper scissors</h1>
+
+    <button onclick="playGame('Rock')">Rock</button>
+
+    <button onclick="playGame('Paper')">Paper</button>
+
+    <button onclick="playGame('Scissors')">Scissors</button>
+
+    <button onclick="reset()" >Reset</button>
+
+    <script>
+
+        let score = JSON.parse(localStorage.getItem('score')) || {win: 0,lose: 0,tie: 0}
+        
+        function playGame(playerMove){
+        let result = computerMove();
+        let finalResult='';
+
+        // ROCK
+        if(playerMove === 'Rock'){    
+            if(result == 'Paper'){
+                finalResult = 'you lose'; 
+            } else if( result == 'Rock'){
+                finalResult = 'tie'; 
+            } else if( result == 'Scissors'){
+                finalResult = 'you win';
+            }
+        } 
+        // PAPER
+        else if(playerMove === 'Paper'){
+            if(result == 'Paper'){
+                finalResult = 'tie'; 
+            } else if( result == 'Rock'){
+                finalResult = 'you win'; 
+            } else if( result == 'Scissors'){
+                finalResult = 'you lose';
+            }
+        }
+        // SCISSORS
+        else if(playerMove === 'Scissors'){
+            if(result == 'Paper'){
+                finalResult = 'you win'; 
+            } else if( result == 'Rock'){
+                finalResult = 'you lose'; 
+            } else if( result == 'Scissors'){
+                finalResult = 'tie';
+            }
+        }
+
+        if(finalResult === 'you win'){
+            score.win++;
+        } else if( finalResult === 'you lose'){
+            score.lose++;
+        }else if(finalResult === 'tie'){
+            score.tie++;
+        }
+        
+        //LOCAL STORAGE
+        localStorage.setItem('score',JSON.stringify(score));
+        
+
+        alert(`your pick ${playerMove}, computer picks ${result}, ${finalResult}
+        Score: Win - ${score.win}, Lose - ${score.lose}, Tie - ${score.tie}
+        `)
+    }
+
+        function computerMove(){
+            let result = '';
+            let move = Math.random();
+            if(move > 0 && move < 1/3){
+                result = 'Rock';
+            } else if(move > 1/3 && move < 2/3){
+                result = 'Paper';
+            } else if(move > 2/3 && move < 1){
+                result = 'Scissors';
+            }
+            return result;
+        }
+        
+        
+        function reset(){
+                score.win = 0;
+                score.lose = 0;
+                score.tie = 0;
+                localStorage.removeItem('score');
+            }
+        
+        
+
+        /*function toFahrenheit(celsius){
+            return `Fahrenheit = ${(celsius * 9/5) + 32}`;
+        }
+
+        function toCelsius(fahrenheit){
+            return `Celsius = ${(fahrenheit -32) * 5/9}`;
+        }
+
+        function convertTemperature(degree, unit){
+            if(unit === 'Celsius'){
+                return toFahrenheit(degree);
+            } else if(unit === 'Fahrenheit'){
+                return toCelsius(degree);
+            }
+        }
+
+        console.log(convertTemperature(25, 'Celsius'));
+        console.log(convertTemperature(86, 'Fahrenheit')); */
+    </script>
+</body>
+</html>

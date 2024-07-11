@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coin Toss</title>
+</head>
+<body>
+    <h1>Guess Tail or Head</h1>
+    <button onclick=" playGame('Tail')">Tail</button>
+    <button onclick=" playGame('Head')">Head</button>
+    <p class="you-chose"> </p>
+    <input type="text" onkeydown="onKey()" class="inpt">
+    <p class="test"></p>
+
+<script>
+    const test = document.querySelector('.test')
+    const inpt = document.querySelector('.inpt')
+    function onKey(event) {
+        test.innerHTML = inpt.value
+    }
+
+    let youChose = document.querySelector('.you-chose');
+    function playGame(toss){
+        let randomNumber = Math.random();
+        let result = '';
+        if(randomNumber < 0.5){
+            result = 'Head';
+        } else {
+            result = 'Tail';
+        }
+            console.log(result);
+            console.log(toss)
+
+            if(result === 'Head' && toss === 'Head'){
+                youChose.innerText = `You win! its a ${result}`
+                console.log('You win!');
+            }else if(result === 'Tail' && toss === 'Tail'){
+                youChose.innerText = `You win! its a ${result}`
+                console.log('You win!');
+            } else{
+                console.log('You lose!');
+                youChose.innerText = `You lose! its a ${result}`
+            }
+    }
+</script>
+
+    
+</body>
+</html>

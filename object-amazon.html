@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+
+    <script>
+        const product1 = {
+            name : 'basketball',
+            brand : 'nike',
+            price : 500,
+        };
+
+        const product2 = {
+            name : 'basketball',
+            brand : 'nike',
+            price : 750,
+        };
+        
+        function comparePrice(a, b){
+           if(a.brand > b.brand){
+            return `${a.brand} is expensive than ${b.brand}`
+           } else{
+            return `${b.brand} is expensive than ${a.brand}`
+ 
+           }
+        }
+        console.log(comparePrice(product1, product2));
+
+        function isSameProduct(a,b){
+            if(a.name === b.name && a.brand === b.brand){
+                return true;
+            } else{
+                return false;
+            }
+        }
+        console.log(isSameProduct(product1, product2));
+
+        let str = 'adarsh';
+        let reptstr = str.repeat(5);
+        console.log(reptstr);
+    </script>
+</body>
+</html>
