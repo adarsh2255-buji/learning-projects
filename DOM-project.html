@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/DOM-project.css">
     <title>DOM project</title>
 </head>
 <body>
@@ -11,10 +12,17 @@
 
     <script>
         const subButton = document.querySelector('.sub-button');
-        
-        subButton.addEventListener('click', () => {
-            subButton.innerHTML ==='Subscribe' ? subButton.innerHTML ='Subscribed' :  subButton.innerHTML = 'Subscribe';
-        })
+
+        function subscribe(){
+            if(subButton.innerText === 'Subscribe') {
+                subButton.innerHTML = 'Subscribed';
+                subButton.classList.add('is-subscribed');
+            } else {
+                subButton.innerHTML = 'Subscribe';
+                subButton.classList.remove('is-subscribed');
+            }
+        }
+        subButton.addEventListener('click', subscribe);
     </script>
     
 </body>
