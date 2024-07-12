@@ -12,24 +12,8 @@
     <button class="btnShowQuanitity">Show quantity</button>
     <button class="addToCart">Add to cart</button>
     <button class="removeFromCart">Remove from cart</button>
-
-    <button onclick="
-     if(cartQuantity >= 10) {
-        console.log('Cart is full. Cannot add more items.');
-        return;
-    }else{
-        console.log(`Cart Quantity: ${cartQuantity += 2}`);
-    }
-    " class="add2Item">+2</button>
-
-    <button onclick="
-     if(cartQuantity >= 10) {
-        console.log('Cart is full. Cannot add more items.');
-        return;
-    }else{
-        console.log(`Cart Quantity: ${cartQuantity += 3}`);
-    }
-    " class="add3Item">+3</button>
+    <button class="addItem" data-quantity="2">+2</button>
+    <button class="addItem" data-quantity="3">+3</button>
     <button onclick="
     console.log(`Cart has reseted`)
     console.log(`Cart Quantity : ${cartQuantity -=cartQuantity}`);
@@ -40,8 +24,7 @@
     <script>
         const addToCart = document.querySelector('.addToCart');
         const removeFromCart = document.querySelector('.removeFromCart');
-        const add2Item = document.querySelector('.add2Item');
-        const add3Item = document.querySelector('.add3Item');
+        const addItem = document.querySelectorAll('.addItem');
         const resetCart = document.querySelector('.resetCart');
         const btnShowQuanitity = document.querySelector('.btnShowQuanitity');
         const showQuanitity = document.querySelector('.showQuanitity');
@@ -63,6 +46,18 @@
         function showCartQuanitity(){
             showQuanitity.textContent = `Cart Quantity: ${cartQuantity}`;
         }
+        function addMultipleItem(item){
+            if(cartQuantity + item >=10){
+                showQuanitity.textContent = `Cannot add more than 10 items`;
+                console.log('Cart is full. Cannot add more items.');
+                return;
+            } else {
+                cartQuantity += item;
+                showQuanitity.textContent = `${cartQuantity}`;
+                console.log(`Cart Quantity: ${cartQuantity}`);
+            }
+        }
+
 
         function removeItemFromCartList(){
             if(cartQuantity <= 0){
@@ -79,7 +74,9 @@
         addToCart.addEventListener('click', addToCartList);
         btnShowQuanitity.addEventListener('click', showCartQuanitity);
         removeFromCart.addEventListener('click', removeItemFromCartList);
-
+        addItem.forEach(button => {
+            button.addEventListener('click', () => addMultipleItem(parseInt(button.dataset.quantity)));
+        });
         
     </script>
 </body>
