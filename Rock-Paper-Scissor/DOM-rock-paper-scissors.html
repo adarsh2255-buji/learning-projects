@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="RockPaperScissors.css">
+    <title>DOM rock paper scissors</title>
+</head>
+<body>
+    <h1 class="title">Rock Paper Scissors</h1>
+    <button class="rock move-btn"><img src="../images/rock-emoji.png" alt="" class="move-icon"></button>    
+    <button class="paper move-btn"><img src="../images/paper-emoji.png" alt="" class="move-icon"></button>    
+    <button class="scissors move-btn"><img src="../images/scissors-emoji.png" alt="" class="move-icon"></button>
+    
+    <br><br>
+    <div>
+        <span class="your-pick">Your Pick :
+            <img src="" alt="" class="move-icon your-move">
+        </span> &nbsp;
+        <span class="computer-pick">Computer pick : 
+            <img src="" alt="" class="move-icon computer-move">
+        </span>
+        <p class="show-result"></p>
+    </div>
+    <div>
+    <span class="win">Win : 0</span>
+    <span class="lose">Lose : 0</span>
+    <span class="tie">Tie : 0</span>
+    </div>
+    <br>
+    <button class="reset">Reset</button>
+</body>
+<script>
+    const RockButton = document.querySelector('.rock');
+    const PaperButton = document.querySelector('.paper');
+    const ScissorsButton = document.querySelector('.scissors');
+    const resetButton = document.querySelector('.reset');
+    const WinSpan = document.querySelector('.win');
+    const LoseSpan = document.querySelector('.lose');
+    const TieSpan = document.querySelector('.tie');
+    const yourPick = document.querySelector('.your-move');
+    const computerPick = document.querySelector('.computer-move'); 
+    const showResult = document.querySelector('.show-result'); 
+
+
+    let score = JSON.parse(localStorage.getItem('score')) || { win: 0, lose: 0, tie: 0}
+    const savedPick = JSON.parse(localStorage.getItem('pick'));
+    let savedResult = JSON.parse(localStorage.getItem('showResult'))
+
+    // computer move
+    function computerMove() {
+        let result = '';
+        let move = Math.random();
+        if(move > 0 && move < 1/3) {
+            result = 'rock';
+        } else if(move > 1/3 && move < 2/3) {
+            result = 'paper';
+        } else if(move > 2/3 && move < 1) {
+            result ='scissors';
+        }
+        return result;
+    }
+
+    //restore picks from local storage.
+    
+    if(savedPick) {
+        yourPick.src = `../images/${savedPick.playerPick}-emoji.png`;
+        computerPick.src = `../images/${savedPick.computerPick}-emoji.png`;
+    }
+    if(savedResult) {
+        showResult.textContent = `you ${savedResult.result}`;
+    }
+    updateScore();
+
+    //player move
+    function playerMove(playerChoice){
+        const computerChoice = computerMove();
+        let result = '';
+        
+        //rock
+        if(playerChoice === 'rock') {
+            if(computerChoice === 'paper') {
+                result = 'lose';
+            } else if(computerChoice === 'rock') {
+                result = 'tie';
+            } else if(computerChoice === 'scissors') {
+                result = 'win';
+            }
+        }
+        //paper
+        else if(playerChoice === 'paper') {
+            if(computerChoice === 'rock') {
+                result = 'win';
+            } else if(computerChoice === 'paper') {
+                result = 'tie';
+            } else if(computerChoice === 'scissors') {
+                result = 'lose';
+            }
+        }
+        //scissors
+        else if(playerChoice ==='scissors') {
+            if(computerChoice === 'rock') {
+                result = 'lose';
+            } else if(computerChoice === 'paper') {
+                result = 'win';
+            } else if(computerChoice ==='scissors') {
+                result = 'tie';
+            }
+        }
+        
+        //add score
+        if(result === 'win') {
+            score.win++
+        } else if(result === 'tie') {
+            score.tie++
+        } else if(result === 'lose') {
+            score.lose++
+        }
+        updateScore();
+
+
+         // update picks and result
+            yourPick.src = `../images/${playerChoice}-emoji.png`;
+            computerPick.src = `../images/${computerChoice}-emoji.png`;
+            //show win/lose/tie
+             showResult.textContent = `you ${result}`;    
+    
+
+          // Save score and picks to localStorage
+          localStorage.setItem('score', JSON.stringify(score));
+          localStorage.setItem('pick', JSON.stringify({computerPick : computerChoice, playerPick : playerChoice}));
+          localStorage.setItem('showResult', JSON.stringify({result : result}));
+      
+        console.log(`your pick ${playerChoice}, computer picks ${computerChoice}, ${result}
+        Score: Win - ${score.win}, Lose - ${score.lose}, Tie - ${score.tie}, result - ${result}
+        `)
+    }
+    //score update
+    function updateScore(){
+            WinSpan.textContent = `Win : ${score.win}`;
+            LoseSpan.textContent = `Lose : ${score.lose}`;
+            TieSpan.textContent = `Tie : ${score.tie}`;
+        }
+    //reset
+    function reset(){
+            score.win = 0;
+            score.lose = 0;
+            score.tie = 0;
+            localStorage.removeItem('score');
+            localStorage.removeItem('pick');
+            localStorage.removeItem('showResult')
+            updateScore();
+            yourPick.src = 'Your Pick : ';
+            computerPick.src = 'Computer Pick : ';
+            showResult.textContent = '';
+        }
+    // event listeners
+    RockButton.addEventListener('click', () => playerMove('rock'));
+    PaperButton.addEventListener('click', () => playerMove('paper'));
+    ScissorsButton.addEventListener('click', () => playerMove('scissors'));
+    TieSpan.addEventListener('click', () => playerMove('tie'));
+    resetButton.addEventListener('click', () => reset());
+</script>
+</html>
