@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick=" setTimeout(function(){
+        document.querySelector('button').innerText = 'loading...'
+        setInterval(function(){
+            document.querySelector('button').innerText = 'finished' 
+        },2000)
+    }, 1000)">start</button>
+    <br>
+    <br>
+    <button onclick="
+    function change(){
+        document.querySelector('p').innerText = 'added'
+        setTimeout(function(){
+            document.querySelector('p').innerText = ''
+        }, 2000)
+    }
+    change()
+    ">Add to cart</button>
+    <p 
+    ></p>
+</body>
+</html>
